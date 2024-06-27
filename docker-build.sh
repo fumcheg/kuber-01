@@ -1,0 +1,1 @@
+docker build -f mysql-docker-file -t mysql-image .
