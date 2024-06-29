@@ -15,7 +15,15 @@ spec:
         app: mysql
     spec:
       containers:
-      - env:
+      - name: mysql-db
+        image: mysql-image
+        imagePullPolicy: Never        
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-data
+        env:
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
@@ -31,14 +39,6 @@ spec:
             secretKeyRef:
               key: root_password
               name: mysql-secret
-        name: mysql-db
-        image: mysql-image
-        imagePullPolicy: Never        
-        ports:
-        - containerPort: 3306
-        volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: mysql-data
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
@@ -70,3 +70,15 @@ spec:
   resources:
     requests:
       storage: 20M
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306      
