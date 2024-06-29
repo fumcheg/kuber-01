@@ -13,7 +13,7 @@ minikube image load mysql-image
 minikube image load apache-image
 
 # Apply config files
-kubectl apply -f mysql-config.yaml
-kubectl apply -f mysql-secret.yaml
-kubectl apply -f mysql-deployment.yaml
-kubectl apply -f apache-deployment.yaml
+minikube kubectl apply -- -f mysql-config.yaml
+minikube kubectl apply -- -f mysql-secret.yaml
+minikube kubectl apply -- -f mysql-deployment.yaml
+minikube kubectl apply -- -f apache-deployment.yaml

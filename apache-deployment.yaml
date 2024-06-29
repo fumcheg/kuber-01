@@ -19,7 +19,7 @@ spec:
         image: apache-image
         imagePullPolicy: Never
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         env:
         - name: USER_NAME
           valueFrom:

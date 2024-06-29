@@ -34,11 +34,11 @@ spec:
             secretKeyRef:
               key: password
               name: mysql-secret
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: root_password
-              name: mysql-secret
+        #- name: MYSQL_ROOT_PASSWORD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      key: root_password
+        #      name: mysql-secret
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
@@ -47,17 +47,17 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv
+  name: mysql-pv1
   labels:
     type: local
 spec:
   storageClassName: manual
   capacity:
-    storage: 20M
+    storage: 50M
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data"
+    path: "/data/pv001/"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -69,7 +69,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20M
+      storage: 50M
 ---
 apiVersion: v1
 kind: Service
