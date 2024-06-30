@@ -14,10 +14,10 @@ cluster lab-yusufov (3 nodes)
 |       |-- OS Linux
 |       |-- Apache Web-server + PHP (see apache-docker-file)
 |-- lab-yusufov-m03 (node)
-|   |-- pod/mysql-deployment (IP:10.244.2.2)
+|   |-- pod/mysql-deployment (IP:10.244.2.3)
 |       |-- OS Linux
 |       |-- MySQL database (see mysql-docker-file)
 |-- service/kubernetes ClusterIP 10.96.0.1 443/TCP (cluster node)
-|-- service/apache-service NodePort 10.97.71.50 6969:30069/TCP (apache)
-|-- service/mysql-service ClusterIP 10.97.221.90 3306/TCP (mysql)
+|-- service/apache-service NodePort 10.111.178.192 6969:30069/TCP (apache)
+|-- service/mysql-service ClusterIP 10.97.254.47 3306/TCP (mysql)
 

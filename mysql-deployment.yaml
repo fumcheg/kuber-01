@@ -16,13 +16,15 @@ spec:
     spec:
       containers:
       - name: mysql-db
-        image: mysql-image
-        imagePullPolicy: Never        
+        image: mysql:5.7.44
+        # imagePullPolicy: Never        
         ports:
         - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: mysql-data
+        - mountPath: /docker-entrypoint-initdb.d
+          name: mysql-init
         env:
         - name: MYSQL_USER
           valueFrom:
@@ -34,24 +36,28 @@ spec:
             secretKeyRef:
               key: password
               name: mysql-secret
-        #- name: MYSQL_ROOT_PASSWORD
-        #  valueFrom:
-        #    secretKeyRef:
-        #      key: root_password
-        #      name: mysql-secret
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: root_password
+              name: mysql-secret
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
           claimName: mysql-pv-claim
+      - name: mysql-init
+        configMap:
+          name: mysql-init-configmap        
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv1
+  name: mysql-pv
   labels:
     type: local
 spec:
   storageClassName: manual
+  # persistentVolumeReclaimPolicy: Delete
   capacity:
     storage: 50M
   accessModes:
